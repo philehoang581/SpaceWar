@@ -35,9 +35,7 @@ public class EnemyController : MonoBehaviour
         currentTarget = listTarget[noCurrentTarget];
         SetDirection(listTarget[0]);
         //Debug.Log(listTarget[0].name);
-
-
-        
+      
         //transform.DOMove(new Vector3(0, 2, 0), duration).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
 
         //posTarget = gameController.listPos[gameController.noCurrentPos].position;
@@ -65,9 +63,11 @@ public class EnemyController : MonoBehaviour
 
     private void OnDisable()
     {
+        //Debug.Log($"OnDisable {gameController.GetCheckNum()}");
         transform.DOPause();
         gameController.CheckEndGame();
     }
+    
     public void Patrol()
     {
         pointPatrol = transform.position;
@@ -111,12 +111,12 @@ public class EnemyController : MonoBehaviour
                 isArrange = true;
                 posTarget = gameController.listPos[gameController.noCurrentPos].position;
                 gameController.noCurrentPos++;
-                if(gameController.noCurrentPos==12)
+                if (gameController.noCurrentPos == 12)
                 {
                     Invoke(nameof(SetArranged), 1f);
                 }
                 noCurrentTarget = 0;
-                //gameController.noCurrentPos = 0;
+                ////gameController.noCurrentPos = 0;
             }
             else
             {
