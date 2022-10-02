@@ -26,7 +26,7 @@ public class SpaceShipController : MonoBehaviour
     private Vector2 moveDirection;
     void Start()
     {
-        StartCoroutine(FireBullet(10f));
+        StartCoroutine(nameof(FireBullet));
     }
 
     // Update is called once per frame
@@ -46,19 +46,17 @@ public class SpaceShipController : MonoBehaviour
         yVlue = Mathf.Clamp(yVlue, yMin, yMax);
         transform.position = new Vector2(xVlue, yVlue);
 
-       if(Input.GetMouseButtonDown(1))
-        {
-            StopAllCoroutines();           
-        }      
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            StopAllCoroutines();
-            StartCoroutine(FireBullet(0));
-        }
+       
     }
-    IEnumerator FireBullet(float delay)
+    private void LateUpdate()
     {
-        yield return new WaitForSeconds(delay);
+
+        
+
+    }
+    IEnumerator FireBullet()
+    {
+        yield return new WaitForSeconds(10f);
         while (true)
         {
             yield return new WaitForSeconds(0.3f);

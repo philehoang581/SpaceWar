@@ -7,23 +7,14 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
-
-    [HideInInspector]
     public List<Transform> listPos = new List<Transform>(12);
-    public List<GameObject> listEnemy = new List<GameObject>();
-    //public EnemyController[] arrEnemy = new EnemyController[12];
-
-    public  int noCurrentPos = 0;  
-    
+    public List<GameObject> listEnemy = new List<GameObject>(12);
+    public EnemyController[] arrEnemy = new EnemyController[12];
+    public int noCurrentPos = 0;
     public GameObject enemyPrefab;
     public Transform spawPointEnemy;
-
-    public bool isArranged =false;
-    public bool isEndGame = false;
-
+    public bool isArranged;
     public Text txtWin;
-
-    public static int checkNum = 0;
     
     // Start is called before the first frame update
     private void Awake()
@@ -36,28 +27,16 @@ public class GameController : MonoBehaviour
     void Start()
     {
         txtWin.enabled = false;
-        StartCoroutine(SpawEnemy(0.5f));
+        StartCoroutine(nameof(SpawEnemy));
     }
+
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log(listEnemy.Count);
     }
-    public void ResetInfoScene()
+    IEnumerator SpawEnemy()
     {
-        noCurrentPos = 0;
-        isArranged = false;       
-        //isEndGame = false;
-    }
-    public int GetCheckNum()
-    {
-        checkNum++;
-        return checkNum;
-    }
-    IEnumerator SpawEnemy(float delay = 3f)
-    {
-        yield return new WaitForSeconds(delay);
-        txtWin.enabled = false;
         for (int i = 0; i < 12; i++)
         {
             yield return new WaitForSeconds(0.5f);
@@ -65,35 +44,23 @@ public class GameController : MonoBehaviour
             temp.SetActive(true);
             listEnemy.Add(temp);
         }
-        isEndGame = false;
-        //arrEnemy = FindObjectsOfType<EnemyController>();       
+        arrEnemy = FindObjectsOfType<EnemyController>();
     }
     public void EndGame()
     {
-        isEndGame = true;
-        txtWin.enabled = true;
-        if (isEndGame)
-        {
-            StartCoroutine(SpawEnemy(3f));
-            ResetInfoScene();
-        }                
-        //Invoke(nameof(LoadScene), 3f);
+        txtWin.enabled = true ;
+        Invoke(nameof(LoadScene), 3f);
     }
     public void CheckEndGame()
-    {       
-        for (int i = 0; i < listEnemy.Count; i++)
-        {
-            if (listEnemy[i] == null)
-            {            
-                listEnemy.Remove(listEnemy[i]);                               
-            }
-        }
-       // Debug.Log($"listCount is : {listEnemy.Count}");
-        if (listEnemy.Count==1 && !isEndGame)
+    {
+        
+        
+        arrEnemy = FindObjectsOfType<EnemyController>();
+        if(arrEnemy.Length<2)
         {
             Debug.Log("EndGame");
             EndGame();
-        }
+        }      
     }
     public void LoadScene()
     {
