@@ -35,7 +35,8 @@ public class GameController : MonoBehaviour
     }
     void Start()
     {
-        txtWin.enabled = false;
+       // txtWin.enabled = false;
+        txtWin.gameObject.SetActive(false);
         StartCoroutine(SpawEnemy(0.5f));
     }
     // Update is called once per frame
@@ -57,7 +58,8 @@ public class GameController : MonoBehaviour
     IEnumerator SpawEnemy(float delay = 3f)
     {
         yield return new WaitForSeconds(delay);
-        txtWin.enabled = false;
+        //txtWin.enabled = false;
+        txtWin.gameObject.SetActive(false);
         for (int i = 0; i < 12; i++)
         {
             yield return new WaitForSeconds(0.5f);
@@ -71,7 +73,7 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         isEndGame = true;
-        txtWin.enabled = true;
+        txtWin.gameObject.SetActive(true);
         if (isEndGame)
         {
             StartCoroutine(SpawEnemy(3f));
