@@ -5,14 +5,26 @@ using UnityEngine;
 public class Popups : MonoBehaviour
 {
     public static Popups Instance;
-    void Start()
+    static GameObject _canvasPage;
+    public static GameObject CanvasPage
     {
-        Instance = this;   
-    }
+        get
+        {
+            if (_canvasPage == null)
+                _canvasPage = GameObject.FindWithTag("Canvas Page");
 
-    // Update is called once per frame
-    void Update()
+            return _canvasPage;
+        }
+    }
+    static GameObject _popup;
+    public static GameObject Popup
     {
-        
+        get
+        {
+            if (_popup == null)
+                _popup = GameObject.FindWithTag("Popup");
+
+            return _popup;
+        }
     }
 }
